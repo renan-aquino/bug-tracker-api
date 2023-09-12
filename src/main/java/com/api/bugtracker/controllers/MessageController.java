@@ -27,6 +27,7 @@ public class MessageController {
         Message messageData = new Message(data);
         messageData.setCreated_at(LocalDateTime.now().withNano(0));
         messageData.setUser_id(1);
+        messageData.setTicketId(1);
         repository.save(messageData);
         return;
     }
