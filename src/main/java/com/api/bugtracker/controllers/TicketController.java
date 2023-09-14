@@ -1,5 +1,6 @@
 package com.api.bugtracker.controllers;
 
+import com.api.bugtracker.dtos.LoginResponseDTO;
 import com.api.bugtracker.dtos.MessageRequestDTO;
 import com.api.bugtracker.models.Message;
 import com.api.bugtracker.repositories.MessageRepository;
@@ -27,7 +28,7 @@ public class TicketController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
-    private void saveTicket(@RequestBody TicketRequestDTO data){
+    private ResponseEntity saveTicket(@RequestBody TicketRequestDTO data){
         Ticket ticketData = new Ticket(data);
         ticketData.setCreated_at(LocalDateTime.now().withNano(0));
         repository.save(ticketData);
@@ -39,7 +40,7 @@ public class TicketController {
         message.setCreated_at(LocalDateTime.now().withNano(0));
         message.setUser_id(1);
         messageRepository.save(message);
-        return;
+        return ResponseEntity.ok(new TicketResponseDTO(ticketData));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
