@@ -38,7 +38,7 @@ public class TicketController {
         Message message = new Message(messageDTO);
         message.setTicketId(Math.toIntExact(ticketData.getId()));
         message.setCreated_at(LocalDateTime.now().withNano(0));
-        message.setUser_id(1);
+        message.setUser_id("aaa");
         messageRepository.save(message);
         return ResponseEntity.ok(new TicketResponseDTO(ticketData));
     }

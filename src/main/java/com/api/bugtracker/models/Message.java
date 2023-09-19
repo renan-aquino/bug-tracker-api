@@ -19,7 +19,7 @@ public class Message {
     private Long id;
     private String text;
     private LocalDateTime created_at;
-    private Integer user_id;
+    private String user_id;
     private Integer ticketId;
 
     public Message(MessageRequestDTO data){

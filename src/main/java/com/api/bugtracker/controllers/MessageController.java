@@ -26,7 +26,7 @@ public class MessageController {
     private void saveMessage(@RequestBody MessageRequestDTO data){
         Message messageData = new Message(data);
         messageData.setCreated_at(LocalDateTime.now().withNano(0));
-        messageData.setUser_id(1);
+        messageData.setUser_id("aaa");
         messageData.setTicketId(1);
         repository.save(messageData);
         return;
