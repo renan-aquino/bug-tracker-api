@@ -1,5 +1,6 @@
 package com.api.bugtracker.services;
 
+import com.api.bugtracker.models.User;
 import com.api.bugtracker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,8 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByLogin(username);
+        User user = repository.findByLogin(username);
+
+        return user;
     }
 }

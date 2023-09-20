@@ -5,9 +5,13 @@ import com.api.bugtracker.dtos.MessageResponseDTO;
 import com.api.bugtracker.dtos.TicketResponseDTO;
 import com.api.bugtracker.models.Message;
 import com.api.bugtracker.models.Ticket;
+import com.api.bugtracker.models.User;
 import com.api.bugtracker.repositories.MessageRepository;
+import com.api.bugtracker.services.AuthService;
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -26,7 +30,11 @@ public class MessageController {
     private void saveMessage(@RequestBody MessageRequestDTO data){
         Message messageData = new Message(data);
         messageData.setCreated_at(LocalDateTime.now().withNano(0));
-        messageData.setUser_id("aaa");
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+
+        messageData.setUser_id(user.getId());
         messageData.setTicketId(1);
         repository.save(messageData);
         return;
