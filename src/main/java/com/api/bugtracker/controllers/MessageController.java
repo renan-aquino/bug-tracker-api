@@ -35,7 +35,7 @@ public class MessageController {
         User user = (User) auth.getPrincipal();
 
         messageData.setUser_id(user.getId());
-        messageData.setTicketId(1);
+//        messageData.setTicketId(1);
         repository.save(messageData);
         return;
     }

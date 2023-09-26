@@ -3,6 +3,7 @@ package com.api.bugtracker.controllers;
 import com.api.bugtracker.dtos.LoginResponseDTO;
 import com.api.bugtracker.dtos.MessageRequestDTO;
 import com.api.bugtracker.models.Message;
+import com.api.bugtracker.models.User;
 import com.api.bugtracker.repositories.MessageRepository;
 import com.api.bugtracker.repositories.TicketRepository;
 import com.api.bugtracker.dtos.TicketRequestDTO;
@@ -10,6 +11,8 @@ import com.api.bugtracker.dtos.TicketResponseDTO;
 import com.api.bugtracker.models.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -33,12 +36,17 @@ public class TicketController {
         ticketData.setCreated_at(LocalDateTime.now().withNano(0));
         repository.save(ticketData);
 
-        MessageRequestDTO messageDTO = new MessageRequestDTO(data.text());
+        MessageRequestDTO messageDTO = new MessageRequestDTO(data.text(), Math.toIntExact(ticketData.getId()));
 
         Message message = new Message(messageDTO);
         message.setTicketId(Math.toIntExact(ticketData.getId()));
         message.setCreated_at(LocalDateTime.now().withNano(0));
-        message.setUser_id("aaa");
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+
+        message.setUser_id(user.getId());
+
         messageRepository.save(message);
         return ResponseEntity.ok(new TicketResponseDTO(ticketData));
     }

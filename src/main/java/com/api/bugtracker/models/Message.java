@@ -24,6 +24,7 @@ public class Message {
 
     public Message(MessageRequestDTO data){
         this.text = data.text();
+        this.ticketId = data.ticketId();
     }
 
 }
