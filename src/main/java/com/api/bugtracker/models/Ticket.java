@@ -18,6 +18,7 @@ public class Ticket {
     private Long id;
     private String title;
     private LocalDateTime created_at;
+    public String status;
 
     public Ticket(TicketRequestDTO data){
         this.title = data.title();

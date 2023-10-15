@@ -73,4 +73,25 @@ public class TicketController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/status/{status}")
+    public List<TicketResponseDTO> getAllByStatus(@PathVariable String status){
+        List<Ticket> ticketsByStatus = repository.findAllByStatus(status);
+        List<TicketResponseDTO> ticketList = ticketsByStatus.stream().map(TicketResponseDTO::new).toList();
+        return ticketList;
+    }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Ticket> closeTicket(@PathVariable Long id) {
+        Ticket ticket = repository.findById(id).get();
+        if (ticket.getStatus().equals("CLOSED")) {
+            ticket.setStatus("OPEN");
+        } else if (ticket.getStatus().equals("OPEN")) {
+            ticket.setStatus("CLOSED");
+        }
+        repository.save(ticket);
+
+        return ResponseEntity.ok(ticket);
+    }
 }
