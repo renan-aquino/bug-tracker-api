@@ -22,6 +22,7 @@ public class Ticket {
 
     public Ticket(TicketRequestDTO data){
         this.title = data.title();
+        this.status = "OPEN";
     }
 
 }
