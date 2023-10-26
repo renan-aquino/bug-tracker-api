@@ -3,7 +3,7 @@ package com.api.bugtracker.controllers;
 import com.api.bugtracker.dtos.*;
 import com.api.bugtracker.infra.security.TokenService;
 import com.api.bugtracker.models.User;
-import com.api.bugtracker.repositories.MessageRepository;
+import com.api.bugtracker.models.UserRole;
 import com.api.bugtracker.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("auth")
@@ -45,15 +43,16 @@ public class AuthController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
+    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO data){
         if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.login(), encryptedPassword, data.role());
+        User newUser = new User(data.name(), data.login(), encryptedPassword, UserRole.ADMIN);
 
         this.repository.save(newUser);
 
         return ResponseEntity.ok().build();
+
     }
 
 }
