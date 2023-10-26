@@ -1,13 +1,10 @@
 package com.api.bugtracker.controllers;
 
-import com.api.bugtracker.dtos.LoginResponseDTO;
-import com.api.bugtracker.dtos.MessageRequestDTO;
+import com.api.bugtracker.dtos.*;
 import com.api.bugtracker.models.Message;
 import com.api.bugtracker.models.User;
 import com.api.bugtracker.repositories.MessageRepository;
 import com.api.bugtracker.repositories.TicketRepository;
-import com.api.bugtracker.dtos.TicketRequestDTO;
-import com.api.bugtracker.dtos.TicketResponseDTO;
 import com.api.bugtracker.models.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -93,5 +90,20 @@ public class TicketController {
         repository.save(ticket);
 
         return ResponseEntity.ok(ticket);
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteTicket(@PathVariable Long id) {
+        Ticket ticket = repository.findById(id).get();
+//        List<MessageResponseDTO> messageList;
+//
+//        messageList = messageRepository.findByTicketId(id.intValue()).stream().map(MessageResponseDTO::new).toList();
+//        List<Message> message = messageRepository.findByTicketId(id.intValue());
+
+        messageRepository.deleteByTicketId(id.intValue());
+        repository.delete(ticket);
+
+        return ResponseEntity.ok().build();
     }
 }
