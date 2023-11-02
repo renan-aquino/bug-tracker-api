@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.bug-tracker-API</groupId>
 	<artifactId>bug-tracker-API</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>bug-tracker-API</name>
 	<description>Bug Tracker API</description>
 	<properties>
