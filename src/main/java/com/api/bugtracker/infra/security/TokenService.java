@@ -23,7 +23,7 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("bug-tracker-API")
                     .withSubject(user.getLogin())
-                    .withExpiresAt(genExpirationDate())
+//                    .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception){
