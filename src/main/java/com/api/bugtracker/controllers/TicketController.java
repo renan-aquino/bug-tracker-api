@@ -78,6 +78,22 @@ public class TicketController {
         List<TicketResponseDTO> ticketList = ticketsByStatus.stream().map(TicketResponseDTO::new).toList();
         return ticketList;
     }
+
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/check/{id}")
+    public ResponseEntity checkTicket(@PathVariable Long id){
+        Optional<Ticket> optionalTicket = repository.findById(id);
+        if (optionalTicket.isPresent()) {
+            // Ticket found
+            return ResponseEntity.ok().build();
+        } else {
+            // No ticket found
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PatchMapping("/{id}/status")
     public ResponseEntity<Ticket> closeTicket(@PathVariable Long id) {
