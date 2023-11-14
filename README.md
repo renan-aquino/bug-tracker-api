@@ -26,7 +26,10 @@ Ensure you have the following installed before running the application:
 
 ## Installation and Setup
 
-1. Clone the repository and go to its directory:
+1. Clone the repository:
+```bash
+git clone https://github.com/renan-aquino/bug-tracker-api.git
+```
 
 2. Configure your database connection in `src/main/resources/application.properties`.
 
